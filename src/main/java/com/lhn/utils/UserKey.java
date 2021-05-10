@@ -36,4 +36,8 @@ public class UserKey extends BasePrefix{
     public static String getUserKeyById(MiaoshaUser user){
         return getById.getPrefix()+user.getId();
     }
+
+    public static String getUserByName(MiaoshaUser user){
+        return getByName.getPrefix()+user.getNickname();
+    }
 }

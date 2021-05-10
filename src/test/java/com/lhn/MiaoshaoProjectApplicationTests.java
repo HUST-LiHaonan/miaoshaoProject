@@ -25,6 +25,6 @@ class MiaoshaoProjectApplicationTests {
         user.setId(1L);
         user.setPassword("123456");
         user.setNickname("李浩楠");
-
+        
     }
 }
