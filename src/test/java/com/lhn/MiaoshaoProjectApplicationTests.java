@@ -1,14 +1,13 @@
 package com.lhn;
 
 
+import com.lhn.domain.MiaoshaUser;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import java.util.concurrent.TimeUnit;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -22,10 +21,10 @@ class MiaoshaoProjectApplicationTests {
 
     @Test
     void testRedis(){
-        while (!redisTemplate.opsForValue().setIfAbsent("name", "mylock", 10, TimeUnit.SECONDS)){
-            System.out.println("当前有人正在获取锁");
-        }
-        System.out.println("已经获取到锁");
-        System.out.println(redisTemplate.opsForValue().get("name"));
+        MiaoshaUser user = new MiaoshaUser();
+        user.setId(1L);
+        user.setPassword("123456");
+        user.setNickname("李浩楠");
+
     }
 }

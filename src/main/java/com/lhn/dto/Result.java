@@ -1,14 +1,14 @@
 /**
  * Copyright (C), 2016-2021, 华中科技大学
- * FileName: User
+ * FileName: Result
  * Author:   mac
- * Date:     2021/5/10 1:16 下午
+ * Date:     2021/5/10 2:06 下午
  * Description:
  * History:
  * <author>          <time>          <version>          <desc>
  * 作者姓名           修改时间           版本号              描述
  */
-package com.lhn.dao;
+package com.lhn.dto;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;
@@ -23,8 +23,8 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-public class User {
-    private Integer id;
-    private String username;
-    private Integer age;
+public class Result<T> {
+    private int code;
+    private String msg;
+    private T data;
 }
