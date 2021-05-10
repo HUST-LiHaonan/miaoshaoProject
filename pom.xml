@@ -50,8 +50,20 @@
 
         <dependency>
             <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
+            <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.2.6</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
 
         <dependency>

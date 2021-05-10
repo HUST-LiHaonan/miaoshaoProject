@@ -1,8 +1,8 @@
 /**
  * Copyright (C), 2016-2021, 华中科技大学
- * FileName: TestController
+ * FileName: LoginController
  * Author:   mac
- * Date:     2021/5/10 10:11 上午
+ * Date:     2021/5/10 8:24 下午
  * Description:
  * History:
  * <author>          <time>          <version>          <desc>
@@ -11,7 +11,6 @@
 package com.lhn.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -23,11 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @since 1.0.0
  */
 @Controller
-@RequestMapping("/hello")
-public class TestController {
-    @RequestMapping("/thymeleaf")
-    public String test(Model model){
-        model.addAttribute("name","lhn");
-        return "hello";
+@RequestMapping("/")
+public class LoginController {
+    @RequestMapping("to_login")
+    public String toLogin(){
+        return "login";
     }
 }

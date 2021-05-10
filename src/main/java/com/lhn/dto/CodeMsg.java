@@ -24,7 +24,6 @@ import org.springframework.stereotype.Component;
  * @since 1.0.0
  */
 @Data
-@Component
 @AllArgsConstructor
 @NoArgsConstructor
 public class CodeMsg {
