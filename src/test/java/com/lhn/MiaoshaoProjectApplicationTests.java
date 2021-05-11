@@ -4,6 +4,7 @@ package com.lhn;
 import com.lhn.dao.MiaoShaUserDao;
 import com.lhn.domain.MiaoshaUser;
 import com.lhn.utils.MD5Util;
+import com.lhn.utils.UserKey;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,21 +30,23 @@ class MiaoshaoProjectApplicationTests {
     @Test
     void testRedis(){
         MiaoshaUser user = new MiaoshaUser();
-        user.setId(1L);
+        user.setId("18371935971");
         user.setPassword("123456");
         user.setNickname("李浩楠");
+        redisTemplate.opsForValue().set(UserKey.getUserKeyById(user),user);
+        System.out.println(redisTemplate.opsForValue().get(UserKey.getUserKeyById(user)));
     }
 
     @Test
     void testUserDao(){
-        System.out.println(userDao.getUserById(18371935971L));
+        System.out.println(userDao.getUserById("18371935971"));
     }
 
     @Test
     void testMD5(){
         String formPassWord = MD5Util.inputPassWordToFormPassWord("123456");
         System.out.println(formPassWord);
-        String dbPassWord = MD5Util.formPassWordToDbPassWord(formPassWord,"1a2b3c4d5f");
+        String dbPassWord = MD5Util.formPassWordToDbPassWord(formPassWord,"lhnwithcs9");
         System.out.println(dbPassWord);
     }
 }

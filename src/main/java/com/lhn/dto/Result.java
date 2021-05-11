@@ -11,6 +11,7 @@
 package com.lhn.dto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,8 +24,40 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
+@NoArgsConstructor
 public class Result<T> {
     private int code;
     private String msg;
     private T data;
+
+    private Result(T data){
+        this.data =data;
+    }
+
+    private Result(CodeMsg codeMsg){
+        this.code = codeMsg.getCode();
+        this.msg = codeMsg.getMsg();
+    }
+
+    private Result(int code,String msg){
+        this.code = code;
+        this.msg = msg;
+    }
+
+    public static <T> Result<T> success(T data){
+        Result<T> result = new Result<>(data);
+        result.setMsg(CodeMsg.SUCCESS.getMsg());
+        result.setCode(CodeMsg.SUCCESS.getCode());
+        return result;
+    }
+
+    public static <T> Result<T> error(CodeMsg codeMsg){
+        return new Result<T>(codeMsg);
+    }
+
+    public CodeMsg fillArgs(Object... args){
+        int code = this.code;
+        String msg = String.format(this.msg,args);
+        return new CodeMsg(code,msg);
+    }
 }
