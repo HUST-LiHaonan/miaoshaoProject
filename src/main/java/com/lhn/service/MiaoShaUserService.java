@@ -11,6 +11,9 @@
 package com.lhn.service;
 
 import com.lhn.domain.MiaoshaUser;
+import com.lhn.vo.LoginVo;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -22,4 +25,8 @@ import com.lhn.domain.MiaoshaUser;
  */
 public interface MiaoShaUserService {
     MiaoshaUser getUserById(String id);
+
+    boolean login(HttpServletResponse response, LoginVo loginVo);
+
+    MiaoshaUser getUserByToken(String token,HttpServletResponse response);
 }

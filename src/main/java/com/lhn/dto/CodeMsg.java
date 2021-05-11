@@ -13,7 +13,6 @@ package com.lhn.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -42,5 +41,11 @@ public class CodeMsg {
     public static CodeMsg MOBILE_NOT_EXIST = new CodeMsg(500214, "手机号不存在");
     public static CodeMsg PASSWORD_ERROR = new CodeMsg(500215, "密码错误");
 
+
+    public CodeMsg fillArgs(Object... args){
+        int code = this.code;
+        String msg = String.format(this.msg,args);
+        return new CodeMsg(code,msg);
+    }
 
 }

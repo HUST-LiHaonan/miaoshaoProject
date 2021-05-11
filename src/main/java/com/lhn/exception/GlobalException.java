@@ -10,6 +10,8 @@
  */
 package com.lhn.exception;
 
+import com.lhn.dto.CodeMsg;
+
 /**
  * 〈一句话功能简述〉<br> 
  * 〈〉
@@ -18,6 +20,17 @@ package com.lhn.exception;
  * @create 2021/5/11
  * @since 1.0.0
  */
-public class GlobleException extends RuntimeException{
-    
+public class GlobalException extends RuntimeException{
+    private static final long serialVersionUID = 1L;
+
+    private CodeMsg cm;
+
+    public GlobalException(CodeMsg cm) {
+        super(cm.toString());
+        this.cm = cm;
+    }
+
+    public CodeMsg getCm() {
+        return cm;
+    }
 }

@@ -55,9 +55,4 @@ public class Result<T> {
         return new Result<T>(codeMsg);
     }
 
-    public CodeMsg fillArgs(Object... args){
-        int code = this.code;
-        String msg = String.format(this.msg,args);
-        return new CodeMsg(code,msg);
-    }
 }

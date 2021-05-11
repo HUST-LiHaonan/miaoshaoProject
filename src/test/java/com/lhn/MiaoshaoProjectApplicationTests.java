@@ -2,9 +2,7 @@ package com.lhn;
 
 
 import com.lhn.dao.MiaoShaUserDao;
-import com.lhn.domain.MiaoshaUser;
 import com.lhn.utils.MD5Util;
-import com.lhn.utils.UserKey;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +25,7 @@ class MiaoshaoProjectApplicationTests {
     void contextLoads() {
     }
 
-    @Test
-    void testRedis(){
-        MiaoshaUser user = new MiaoshaUser();
-        user.setId("18371935971");
-        user.setPassword("123456");
-        user.setNickname("李浩楠");
-        redisTemplate.opsForValue().set(UserKey.getUserKeyById(user),user);
-        System.out.println(redisTemplate.opsForValue().get(UserKey.getUserKeyById(user)));
-    }
+
 
     @Test
     void testUserDao(){
