@@ -15,7 +15,6 @@ import com.lhn.domain.MiaoshaUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -26,19 +25,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @since 1.0.0
  */
 @Controller
-@RequestMapping("/")
+@RequestMapping("/miaosha")
 public class LoginController {
     @Autowired
     private MiaoShaUserDao miaoShaUserDao;
 
-    @RequestMapping("to_login")
+    @RequestMapping("/to_login")
     public String toLogin(){
         return "login";
     }
 
-    @RequestMapping("test")
-    @ResponseBody
-    public MiaoshaUser test(){
-        return miaoShaUserDao.getUserById(18371935971L);
-    }
 }
