@@ -29,14 +29,14 @@ class MiaoshaoProjectApplicationTests {
 
     @Test
     void testUserDao(){
-        System.out.println(userDao.getUserById("18371935971"));
+        System.out.println(userDao.getUserById("13872766128"));
     }
 
     @Test
     void testMD5(){
-        String formPassWord = MD5Util.inputPassWordToFormPassWord("123456");
+        String formPassWord = MD5Util.inputPassWordToFormPassWord("lihaonan1");
         System.out.println(formPassWord);
-        String dbPassWord = MD5Util.formPassWordToDbPassWord(formPassWord,"lhnwithcs9");
+        String dbPassWord = MD5Util.formPassWordToDbPassWord(formPassWord,"1q2w3e4r5t");
         System.out.println(dbPassWord);
     }
 }

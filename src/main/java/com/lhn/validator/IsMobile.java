@@ -12,7 +12,6 @@ package com.lhn.validator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import javax.validation.constraints.NotNull;
 import java.lang.annotation.*;
 
 /**

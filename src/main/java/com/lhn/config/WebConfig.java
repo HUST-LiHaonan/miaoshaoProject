@@ -64,16 +64,16 @@ public class WebConfig implements WebMvcConfigurer {
             HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
             HttpServletResponse response = nativeWebRequest.getNativeResponse(HttpServletResponse.class);
             String paramToken = request.getParameter(MiaoShaUserServiceImpl.COOKI_NAME_TOKEN);
-            String cookieToken = getCookieValue(request,MiaoShaUserServiceImpl.COOKI_NAME_TOKEN);
+            String cookieToken = getCookieValue(request);
             String token = StringUtils.isEmpty(paramToken) ? cookieToken:paramToken;
             MiaoshaUser user = userService.getUserByToken(token,response);
             return user;
         }
 
-        private String getCookieValue(HttpServletRequest request,String cookieName){
+        private String getCookieValue(HttpServletRequest request){
             Cookie[] cookies =request.getCookies();
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals(cookieName)){
+                if (cookie.getName().equals(MiaoShaUserServiceImpl.COOKI_NAME_TOKEN)){
                     return cookie.getValue();
                 }
             }

@@ -19,9 +19,11 @@ import com.lhn.utils.MD5Util;
 import com.lhn.utils.MiaoShaUserKey;
 import com.lhn.utils.UUIDUtil;
 import com.lhn.vo.LoginVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.Cookie;
@@ -38,10 +40,10 @@ import java.util.concurrent.TimeUnit;
  * @since 1.0.0
  */
 @Service
+@Slf4j
 public class MiaoShaUserServiceImpl implements MiaoShaUserService {
 
     public static final String COOKI_NAME_TOKEN = "token";
-
 
     @Autowired
     private MiaoShaUserDao userDao;
@@ -50,13 +52,37 @@ public class MiaoShaUserServiceImpl implements MiaoShaUserService {
     private RedisTemplate<String,Object> redisTemplate;
 
     @Override
+    @Transactional(readOnly = true)
     public MiaoshaUser getUserById(String id) {
-        MiaoshaUser user = userDao.getUserById(id);
+        MiaoshaUser user = (MiaoshaUser) redisTemplate.opsForValue().get(MiaoShaUserKey.getById.getPrefix()+id);
+        if (user==null){
+            user = userDao.getUserById(id);
+            if (user!=null) {
+                redisTemplate.opsForValue().set(MiaoShaUserKey.getById.getPrefix() +":"+ id, user);
+            }
+        }
         return user;
     }
 
     @Override
-    public boolean login(HttpServletResponse response, LoginVo loginVo){
+    @Transactional
+    public Boolean updatePasswordById(String token,String id, String password) {
+        MiaoshaUser user = getUserById(id);
+        if (user==null){
+            throw new GlobalException(CodeMsg.MOBILE_NOT_EXIST);
+        }
+        password = MD5Util.formPassWordToDbPassWord(password,user.getSalt());
+        user.setPassword(password);
+        //更新数据库
+        Boolean result = userDao.updateUserById(id,password);
+        //更新缓存
+        redisTemplate.opsForValue().set(MiaoShaUserKey.getById.getPrefix() +":"+ id,user);
+        redisTemplate.opsForValue().set(token,user);
+        return result;
+    }
+
+    @Override
+    public Boolean login(HttpServletResponse response, LoginVo loginVo){
         if(loginVo == null) {
             throw new GlobalException(CodeMsg.SERVER_ERROR);
         }
@@ -74,17 +100,24 @@ public class MiaoShaUserServiceImpl implements MiaoShaUserService {
         if(!calcPass.equals(dbPass)) {
             throw new GlobalException(CodeMsg.PASSWORD_ERROR);
         }
-        addCookie(user,response);
+        String token = UUIDUtil.uuid();
+        addCookie(user,token,response);
         return true;
     }
 
-    //设置token
-    private void addCookie(MiaoshaUser user,HttpServletResponse response){
-        String token = UUIDUtil.uuid();
+    private void addCookie(MiaoshaUser user,String token,HttpServletResponse response){
+        Cookie cookie;
+        Boolean hasToken = redisTemplate.hasKey(token);
         //设置token
-        redisTemplate.opsForValue().set(MiaoShaUserKey.token.getPrefix()+":"+token,user,MiaoShaUserKey.token.expireSeconds(), TimeUnit.SECONDS);
+        if (hasToken!=null&&hasToken){
+            redisTemplate.opsForValue().set(token,user,MiaoShaUserKey.TOKEN_EXPIRE,TimeUnit.SECONDS);
+             cookie = new Cookie(COOKI_NAME_TOKEN,token);
+
+        }else {
+            redisTemplate.opsForValue().set(MiaoShaUserKey.token.getPrefix()+":"+token,user,MiaoShaUserKey.token.expireSeconds(), TimeUnit.SECONDS);
+             cookie = new Cookie(COOKI_NAME_TOKEN,MiaoShaUserKey.token.getPrefix()+":"+token);
+        }
         //设置cookie
-        Cookie cookie = new Cookie(COOKI_NAME_TOKEN,MiaoShaUserKey.token.getPrefix()+":"+token);
         cookie.setMaxAge(MiaoShaUserKey.token.expireSeconds());
         cookie.setPath("/");
         response.addCookie(cookie);
@@ -97,9 +130,10 @@ public class MiaoShaUserServiceImpl implements MiaoShaUserService {
         }
         Object user = redisTemplate.opsForValue().get(token);
         if (!(user instanceof MiaoshaUser)){
+            log.error("Token出错"+token);
             return null;
         }
-        addCookie((MiaoshaUser) user,response);
+        addCookie((MiaoshaUser) user,token,response);
         return (MiaoshaUser) user;
     }
 }

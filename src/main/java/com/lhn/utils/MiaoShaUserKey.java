@@ -27,7 +27,7 @@ public class MiaoShaUserKey extends BasePrefix{
         super(prefix, expireSeconds);
     }
     public static MiaoShaUserKey token = new MiaoShaUserKey(TOKEN_EXPIRE, "tk");
-
+    public static MiaoShaUserKey getById = new MiaoShaUserKey(0,"id");
     public MiaoShaUserKey(String prefix, Integer expireSeconds) {
         super(prefix, expireSeconds);
     }

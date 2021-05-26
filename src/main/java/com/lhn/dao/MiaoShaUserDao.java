@@ -13,6 +13,7 @@ package com.lhn.dao;
 import com.lhn.domain.MiaoshaUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -26,4 +27,7 @@ import org.apache.ibatis.annotations.Select;
 public interface MiaoShaUserDao {
     @Select("select * from miaosha_user where id = #{id}")
     MiaoshaUser getUserById(String id);
+
+    @Update("update miaosha_user set password = #{password} where id = #{id}")
+    Boolean updateUserById(String id,String password);
 }

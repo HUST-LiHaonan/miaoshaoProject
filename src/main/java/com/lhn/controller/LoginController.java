@@ -10,6 +10,7 @@
  */
 package com.lhn.controller;
 
+import com.lhn.domain.MiaoshaUser;
 import com.lhn.dto.Result;
 import com.lhn.service.MiaoShaUserService;
 import com.lhn.vo.LoginVo;
@@ -31,7 +32,7 @@ import javax.validation.Valid;
  * @since 1.0.0
  */
 @Controller
-@RequestMapping("/miaosha")
+@RequestMapping("/login")
 @Slf4j
 public class LoginController {
     @Autowired

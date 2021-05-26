@@ -74,7 +74,7 @@
         var password = md5(str);
 
         $.ajax({
-            url: "/miaosha/do_login",
+            url: "/login/do_login",
             type: "POST",
             data:{
                 mobile:$("#mobile").val(),
@@ -83,7 +83,7 @@
             success:function(data){
                 layer.closeAll();
                 console.log(data);
-                if(data.code == 0){
+                if(data.code === 0){
                     layer.msg("成功");
                     window.location.href="/goods/to_list";
                 }else{
