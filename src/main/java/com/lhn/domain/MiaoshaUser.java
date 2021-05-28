@@ -13,6 +13,7 @@ package com.lhn.domain;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -25,7 +26,7 @@ import java.util.Date;
  */
 @Data
 @Component
-public class MiaoshaUser {
+public class MiaoshaUser implements Serializable {
     private String id;
     private String nickname;
     private String password;

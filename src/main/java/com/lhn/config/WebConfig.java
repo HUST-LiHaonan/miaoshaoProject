@@ -10,10 +10,11 @@
  */
 package com.lhn.config;
 
+import com.lhn.access.AccessInterceptor;
+import com.lhn.access.UserContext;
 import com.lhn.domain.MiaoshaUser;
-import com.lhn.service.Impl.MiaoShaUserServiceImpl;
-import com.lhn.service.MiaoShaUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -21,12 +22,8 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.thymeleaf.util.StringUtils;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -48,8 +45,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Component
     static class UserArgumentResolver implements HandlerMethodArgumentResolver{
-        @Autowired
-        MiaoShaUserService userService;
         @Override
         public boolean supportsParameter(MethodParameter methodParameter) {
             if (methodParameter.getParameterType()== MiaoshaUser.class){
@@ -58,27 +53,22 @@ public class WebConfig implements WebMvcConfigurer {
                 return false;
             }
         }
-
         @Override
-        public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
-            HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
-            HttpServletResponse response = nativeWebRequest.getNativeResponse(HttpServletResponse.class);
-            String paramToken = request.getParameter(MiaoShaUserServiceImpl.COOKI_NAME_TOKEN);
-            String cookieToken = getCookieValue(request);
-            String token = StringUtils.isEmpty(paramToken) ? cookieToken:paramToken;
-            MiaoshaUser user = userService.getUserByToken(token,response);
-            return user;
+        public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) {
+            return UserContext.getUser();
         }
 
-        private String getCookieValue(HttpServletRequest request){
-            Cookie[] cookies =request.getCookies();
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals(MiaoShaUserServiceImpl.COOKI_NAME_TOKEN)){
-                    return cookie.getValue();
-                }
-            }
-            return "";
-        }
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        String [] exculudes = new String[]{"/*.html","/html/**","/js/**","/css/**","/images/**"};
+        registry.addInterceptor(accessInterceptor()).addPathPatterns("/**").excludePathPatterns(exculudes);
+    }
+
+    @Bean
+    public AccessInterceptor accessInterceptor(){
+        return new AccessInterceptor();
     }
 }
 

@@ -15,7 +15,6 @@ import com.lhn.domain.MiaoshaGoods;
 import com.lhn.service.GoodsService;
 import com.lhn.vo.GoodsVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,9 +33,6 @@ public class GoodsServiceImpl implements GoodsService {
     @Autowired
     private GoodsDao goodsDao;
 
-    @Autowired
-    private RedisTemplate<String,Object> redisTemplate;
-
     @Override
     @Transactional(readOnly = true)
     public List<GoodsVo> listGoodsVo() {
@@ -50,9 +46,10 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public void reduceStock(GoodsVo goods) {
+    public boolean reduceStock(GoodsVo goods) {
         MiaoshaGoods g = new MiaoshaGoods();
         g.setGoodsId(goods.getId());
-        goodsDao.reduceStock(g);
+        int result = goodsDao.reduceStock(g);
+        return result>0;
     }
 }

@@ -13,6 +13,7 @@ package com.lhn.service;
 import com.lhn.domain.MiaoshaUser;
 import com.lhn.vo.LoginVo;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -31,4 +32,6 @@ public interface MiaoShaUserService {
     Boolean login(HttpServletResponse response, LoginVo loginVo);
 
     MiaoshaUser getUserByToken(String token,HttpServletResponse response);
+
+
 }

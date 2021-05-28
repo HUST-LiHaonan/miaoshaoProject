@@ -14,6 +14,8 @@ import com.lhn.domain.MiaoshaUser;
 import com.lhn.domain.OrderInfo;
 import com.lhn.vo.GoodsVo;
 
+import java.awt.image.BufferedImage;
+
 /**
  * 〈一句话功能简述〉<br> 
  * 〈〉
@@ -24,4 +26,14 @@ import com.lhn.vo.GoodsVo;
  */
 public interface MiaoShaService {
     OrderInfo miaosha(MiaoshaUser user, GoodsVo goods);
+
+    long getMiaoshaResult(String id, long goodsId);
+
+    boolean checkPath(MiaoshaUser user, Long goodsId, String path);
+
+    String createMiaoshaPath(MiaoshaUser user, long goodsId);
+
+    boolean checkVerifyCode(MiaoshaUser user, long goodsId, int verifyCode);
+
+    BufferedImage createVerifyCode(MiaoshaUser user, long goodsId);
 }

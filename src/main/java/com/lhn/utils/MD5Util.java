@@ -22,7 +22,7 @@ import org.apache.commons.codec.digest.DigestUtils;
  */
 public class MD5Util {
     private static final String SALT = "1a2b3c4d5f";
-    private static String getMD5Code(String str){
+    public static String getMD5Code(String str){
         return DigestUtils.md5Hex(str);
     }
 

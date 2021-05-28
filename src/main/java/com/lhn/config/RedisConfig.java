@@ -56,6 +56,7 @@ public class RedisConfig extends CachingConfigurerSupport {
                 // 哨兵地址
                 .sentinel("42.192.147.225", 26379);
         sentinelConfig.setPassword("lihaonan1");
+        //读写分离
         LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder().
                 readFrom(ReadFrom.REPLICA_PREFERRED).build();
 

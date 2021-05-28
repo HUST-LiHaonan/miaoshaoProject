@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -136,4 +137,5 @@ public class MiaoShaUserServiceImpl implements MiaoShaUserService {
         addCookie((MiaoshaUser) user,token,response);
         return (MiaoshaUser) user;
     }
+
 }

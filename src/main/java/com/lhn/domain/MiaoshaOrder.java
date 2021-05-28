@@ -13,6 +13,8 @@ package com.lhn.domain;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+
 /**
  * 〈一句话功能简述〉<br> 
  * 〈〉
@@ -23,7 +25,7 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-public class MiaoshaOrder {
+public class MiaoshaOrder implements Serializable {
     private Long id;
     private Long userId;
     private Long  orderId;

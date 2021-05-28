@@ -2,6 +2,9 @@ package com.lhn;
 
 
 import com.lhn.dao.MiaoShaUserDao;
+import com.lhn.domain.MiaoshaUser;
+import com.lhn.rabbitmq.MQReceiver;
+import com.lhn.rabbitmq.MQSender;
 import com.lhn.utils.MD5Util;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,7 +18,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 class MiaoshaoProjectApplicationTests {
 
-
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
 
@@ -24,8 +26,6 @@ class MiaoshaoProjectApplicationTests {
     @Test
     void contextLoads() {
     }
-
-
 
     @Test
     void testUserDao(){
@@ -39,4 +39,6 @@ class MiaoshaoProjectApplicationTests {
         String dbPassWord = MD5Util.formPassWordToDbPassWord(formPassWord,"1q2w3e4r5t");
         System.out.println(dbPassWord);
     }
+
+
 }

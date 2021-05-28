@@ -10,8 +10,6 @@
  */
 package com.lhn.utils;
 
-import com.lhn.domain.MiaoshaUser;
-
 /**
  * 〈一句话功能简述〉<br> 
  * 〈〉
@@ -27,10 +25,7 @@ public class MiaoShaUserKey extends BasePrefix{
         super(prefix, expireSeconds);
     }
     public static MiaoShaUserKey token = new MiaoShaUserKey(TOKEN_EXPIRE, "tk");
-    public static MiaoShaUserKey getById = new MiaoShaUserKey(0,"id");
-    public MiaoShaUserKey(String prefix, Integer expireSeconds) {
-        super(prefix, expireSeconds);
-    }
+    public static MiaoShaUserKey getById = new MiaoShaUserKey("id");
 
     public MiaoShaUserKey(String prefix) {
         super(prefix);

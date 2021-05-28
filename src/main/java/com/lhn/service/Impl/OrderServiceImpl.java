@@ -47,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
     public MiaoshaOrder getMiaoshaOrderByUserIdGoodsId(long userId, long goodsId) {
         MiaoshaOrder order = (MiaoshaOrder) redisTemplate.opsForValue().get(OrderKey.getMiaoshaOrderByUidGid.getPrefix()+":"+userId+":"+goodsId);
         if (order==null){
-            order = orderDao.getMiaoshaOrderByUserIdGoodsId(userId, goodsId);
+            //order = orderDao.getMiaoshaOrderByUserIdGoodsId(userId, goodsId);
             redisTemplate.opsForValue().set(OrderKey.getMiaoshaOrderByUidGid.getPrefix()+":"+userId+":"+goodsId,order);
         }
         return order;
@@ -66,10 +66,10 @@ public class OrderServiceImpl implements OrderService {
         orderInfo.setOrderChannel(1);
         orderInfo.setStatus(0);
         orderInfo.setUserId(Long.parseLong(user.getId()));
-        long orderId = orderDao.insert(orderInfo);
+        orderDao.insert(orderInfo);
         MiaoshaOrder miaoshaOrder = new MiaoshaOrder();
         miaoshaOrder.setGoodsId(goods.getId());
-        miaoshaOrder.setOrderId(orderId);
+        miaoshaOrder.setOrderId(orderInfo.getId());
         miaoshaOrder.setUserId(Long.parseLong(user.getId()));
         orderDao.insertMiaoshaOrder(miaoshaOrder);
         redisTemplate.opsForValue().set(OrderKey.getMiaoshaOrderByUidGid.getPrefix()+":"+user.getId()+":"+goods.getId(),miaoshaOrder);

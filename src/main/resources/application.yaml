@@ -100,6 +100,26 @@ spring:
           cache-public: true
           max-age: 3600
       static-locations: classpath:/static/
+  #配置rabbitMQ
+  rabbitmq:
+    host: lhnwithcs.love
+    port: 5672
+    username: admin
+    password: admin
+    virtual-host: /
+    listener:
+      simple:
+        concurrency: 10
+        max-concurrency: 10
+        prefetch: 1
+        auto-startup: true
+        default-requeue-rejected: true
+    template:
+      retry:
+        enabled: true
+        initial-interval: 1000
+        max-attempts: 3
+        multiplier: 1
 
 # 配置mybatis
 mybatis:

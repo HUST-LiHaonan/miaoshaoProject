@@ -13,7 +13,6 @@ package com.lhn.controller;
 import com.lhn.domain.MiaoshaUser;
 import com.lhn.dto.Result;
 import com.lhn.service.GoodsService;
-import com.lhn.service.MiaoShaUserService;
 import com.lhn.utils.GoodsKey;
 import com.lhn.vo.GoodsDetailVo;
 import com.lhn.vo.GoodsVo;
@@ -48,8 +47,6 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/goods")
 @Slf4j
 public class GoodsController {
-    @Autowired
-    private MiaoShaUserService userService;
 
     @Autowired
     private GoodsService goodsService;
