@@ -15,7 +15,7 @@ import com.lhn.domain.MiaoshaOrder;
 import com.lhn.domain.MiaoshaUser;
 import com.lhn.domain.OrderInfo;
 import com.lhn.service.OrderService;
-import com.lhn.utils.OrderKey;
+import com.lhn.key.OrderKey;
 import com.lhn.vo.GoodsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;

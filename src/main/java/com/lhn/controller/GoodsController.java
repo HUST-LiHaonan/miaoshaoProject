@@ -13,7 +13,7 @@ package com.lhn.controller;
 import com.lhn.domain.MiaoshaUser;
 import com.lhn.dto.Result;
 import com.lhn.service.GoodsService;
-import com.lhn.utils.GoodsKey;
+import com.lhn.key.GoodsKey;
 import com.lhn.vo.GoodsDetailVo;
 import com.lhn.vo.GoodsVo;
 import lombok.extern.slf4j.Slf4j;
@@ -81,8 +81,7 @@ public class GoodsController {
 
     @RequestMapping(value = "/to_detail/{goodsId}",method = RequestMethod.GET)
     @ResponseBody
-    public Result<GoodsDetailVo> detail(HttpServletRequest request,HttpServletResponse response,Model model,MiaoshaUser user,
-                         @PathVariable("goodsId")long goodsId) {
+    public Result<GoodsDetailVo> detail(MiaoshaUser user, @PathVariable("goodsId") long goodsId) {
         GoodsVo goods = goodsService.getGoodsVoByGoodsId(goodsId);
         long startAt = goods.getStartDate().getTime();
         long endAt = goods.getEndDate().getTime();

@@ -17,7 +17,7 @@ import com.lhn.dto.CodeMsg;
 import com.lhn.dto.Result;
 import com.lhn.service.Impl.MiaoShaUserServiceImpl;
 import com.lhn.service.MiaoShaUserService;
-import com.lhn.utils.AccessKey;
+import com.lhn.key.AccessKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.method.HandlerMethod;

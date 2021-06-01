@@ -17,7 +17,7 @@ import com.lhn.service.GoodsService;
 import com.lhn.service.MiaoShaService;
 import com.lhn.service.OrderService;
 import com.lhn.utils.MD5Util;
-import com.lhn.utils.MiaoShaKey;
+import com.lhn.key.MiaoShaKey;
 import com.lhn.utils.UUIDUtil;
 import com.lhn.vo.GoodsVo;
 import org.springframework.beans.factory.annotation.Autowired;

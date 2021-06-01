@@ -20,7 +20,7 @@ import com.lhn.rabbitmq.MiaoshaMessage;
 import com.lhn.service.GoodsService;
 import com.lhn.service.MiaoShaService;
 import com.lhn.service.OrderService;
-import com.lhn.utils.GoodsKey;
+import com.lhn.key.GoodsKey;
 import com.lhn.vo.GoodsVo;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;

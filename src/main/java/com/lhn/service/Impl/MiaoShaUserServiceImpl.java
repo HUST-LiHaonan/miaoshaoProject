@@ -16,7 +16,7 @@ import com.lhn.dto.CodeMsg;
 import com.lhn.exception.GlobalException;
 import com.lhn.service.MiaoShaUserService;
 import com.lhn.utils.MD5Util;
-import com.lhn.utils.MiaoShaUserKey;
+import com.lhn.key.MiaoShaUserKey;
 import com.lhn.utils.UUIDUtil;
 import com.lhn.vo.LoginVo;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -131,7 +130,7 @@ public class MiaoShaUserServiceImpl implements MiaoShaUserService {
         }
         Object user = redisTemplate.opsForValue().get(token);
         if (!(user instanceof MiaoshaUser)){
-            log.error("Token出错"+token);
+            log.warn("Token不存在或已经失效"+token);
             return null;
         }
         addCookie((MiaoshaUser) user,token,response);
