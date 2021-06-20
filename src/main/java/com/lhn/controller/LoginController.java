@@ -10,7 +10,6 @@
  */
 package com.lhn.controller;
 
-import com.lhn.domain.MiaoshaUser;
 import com.lhn.dto.Result;
 import com.lhn.service.MiaoShaUserService;
 import com.lhn.vo.LoginVo;

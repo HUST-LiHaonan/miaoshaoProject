@@ -116,7 +116,7 @@ public class MiaoShaController implements InitializingBean {
         return Result.success(result);
     }
 
-    @AccessLimit(seconds=5, maxCount=5, needLogin=true)
+    @AccessLimit(seconds=5, maxCount=5)
     @RequestMapping(value="/path", method=RequestMethod.GET)
     @ResponseBody
     public Result<String> getMiaoshaPath(MiaoshaUser user, @RequestParam("goodsId")long goodsId, @RequestParam(value="verifyCode", defaultValue="0")int verifyCode) {
@@ -133,8 +133,8 @@ public class MiaoShaController implements InitializingBean {
 
     //初始化相关数据
     @Override
-    public void afterPropertiesSet() throws Exception {
-        List<GoodsVo>  goodsList = goodsService.listGoodsVo();
+    public void afterPropertiesSet() {
+        List<GoodsVo> goodsList = goodsService.listGoodsVo();
         if (goodsList==null){
             return;
         }
